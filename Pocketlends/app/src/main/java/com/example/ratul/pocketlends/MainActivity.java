@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Sign in button handling
-        final TextView Sign_in_button = (TextView) findViewById(R.id.button_sign_in);
+        final Button Sign_in_button = (Button) findViewById(R.id.button_sign_in);
 
         Sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Login button handling
-        final TextView Login_in_button = (TextView) findViewById(R.id.button_log_in);
+        final Button Login_in_button = (Button) findViewById(R.id.button_log_in);
 
         Login_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
