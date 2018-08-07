@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
         logIn_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText username = (EditText) findViewById(R.id.user_name);
+                EditText username = (EditText) findViewById(R.id.username);
                 EditText password = (EditText) findViewById(R.id.password);
                 if (Utils.isEmpty(username) || Utils.isEmpty(password))
                 {

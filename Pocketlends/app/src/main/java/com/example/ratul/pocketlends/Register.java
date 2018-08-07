@@ -23,13 +23,12 @@ public class Register extends AppCompatActivity {
         signIn_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText username = (EditText) findViewById(R.id.user_name);
+                EditText username = (EditText) findViewById(R.id.username);
                 EditText password = (EditText) findViewById(R.id.password);
                 if (Utils.isEmpty(username) || Utils.isEmpty(password))
                 {
                     Toast toast = Toast.makeText(context, "provide username and password", duration);
                     toast.show();
-
                 }
                 else
                 {
