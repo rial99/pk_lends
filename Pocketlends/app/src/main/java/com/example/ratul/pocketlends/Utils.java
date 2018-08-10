@@ -37,7 +37,7 @@ public class Utils {
         return url;
     }
 
-    private static String makeHttpRequest(URL url,String method,String payload)
+    private static String makeHttpRequest(URL url,String method,String payload)throws IOException
     {
         String jsonResponse = "";
         // If the URL is null, then return early.
@@ -48,11 +48,14 @@ public class Utils {
         InputStream inputStream = null;
 
         try {
+            //preliminary header file configurations
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             urlConnection.setRequestMethod(method);
+
+            //for writing the post request
             OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8");
             writer.write(payload);
             writer.close();
@@ -92,4 +95,15 @@ public class Utils {
         return output.toString();
     }
 
+    public static String fetchData(String requestUrl,String method,String payload)
+    {
+        URL url = createUrl(requestUrl);
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url,method,payload);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error closing input stream", e);
+        }
+        return jsonResponse;
+    }
 }

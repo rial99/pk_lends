@@ -1,14 +1,20 @@
 package com.example.ratul.pocketlends;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Register extends AppCompatActivity {
+    private final String REQUEST_URL ="http://finishproject.in:5094/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,26 +22,74 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         final Button signIn_button = (Button) findViewById(R.id.signIn_button);
-        final int duration = Toast.LENGTH_SHORT;
-        final Context context = getApplicationContext();
-
 
         signIn_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText username = (EditText) findViewById(R.id.username);
                 EditText password = (EditText) findViewById(R.id.password);
+                Log.i("Register: ","inside onclick ");
                 if (Utils.isEmpty(username) || Utils.isEmpty(password))
                 {
-                    Toast toast = Toast.makeText(context, "provide username and password", duration);
-                    toast.show();
+                    showToast("please provide username and password");
                 }
                 else
                 {
-
+                    String[] REQ_S = new String[3];
+                    REQ_S[0] = REQUEST_URL;
+                    REQ_S[1] = "POST";
+                    REQ_S[2] = toJson(username.getText().toString(),password.getText().toString());
+                    RegisterAsyncTask task = new RegisterAsyncTask();
+                    task.execute(REQ_S);
                 }
             }
         });
+    }
+
+    private void showToast(String data)
+    {
+        final int duration = Toast.LENGTH_SHORT;
+        final Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, data, duration);
+        toast.show();
+    }
+
+    private String toJson(String username,String password)
+    {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("username",username);
+            json.put("password",password);
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return json.toString();
+    }
+
+    private class RegisterAsyncTask extends AsyncTask<String[],Void,String>{
+        @Override
+        protected String doInBackground(String[]... HTTPdata) {
+
+            if (HTTPdata.length < 1 || HTTPdata[0] == null) {
+                return null;
+            }
+
+            String[] REQ_S = new String[3];
+            REQ_S = HTTPdata[0];
+            String result = Utils.fetchData(REQ_S[0],REQ_S[1],REQ_S[2]);
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            // If there is no result, do nothing.
+            if (result == null) {
+                return;
+            }
+            showToast(result);
+        }
     }
 
 
