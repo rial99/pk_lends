@@ -10,10 +10,6 @@ public class User {
     public final int Trx_id;
     public final int Weight_id;
 
-    public String acess_token;
-    public String refresh_token;
-
-
     public User(String username, int invest_amt, int lend_amt, int borrow_amt, int id, int trx_id, int weight_id) {
         Username = username;
         Invest_amt = invest_amt;

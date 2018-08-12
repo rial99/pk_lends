@@ -1,7 +1,10 @@
 package com.example.ratul.pocketlends;
 
+import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +20,17 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class Utils {
+    public static String fetchData(String requestUrl,String method,String payload)
+    {
+        URL url = createUrl(requestUrl);
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url,method,payload);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error closing input stream", e);
+        }
+        return jsonResponse;
+    }
 
     public static String toJson(String username,String password)
     {
@@ -45,6 +59,8 @@ public class Utils {
     /**
      * Returns new URL object from the given string URL.
      */
+
+
     private static URL createUrl(String stringUrl) {
         URL url = null;
         try {
@@ -57,7 +73,7 @@ public class Utils {
 
     private static String makeHttpRequest(URL url,String method,String payload)throws IOException
     {
-        String jsonResponse = "";
+        String jsonResponse = null;
         // If the URL is null, then return early.
         if (url == null) {
             return jsonResponse;
@@ -83,7 +99,8 @@ public class Utils {
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-            } else {
+            }
+            else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
             if (inputStream != null) {
@@ -113,15 +130,6 @@ public class Utils {
         return output.toString();
     }
 
-    public static String fetchData(String requestUrl,String method,String payload)
-    {
-        URL url = createUrl(requestUrl);
-        String jsonResponse = null;
-        try {
-            jsonResponse = makeHttpRequest(url,method,payload);
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error closing input stream", e);
-        }
-        return jsonResponse;
-    }
+
+
 }

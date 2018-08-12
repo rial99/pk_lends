@@ -1,6 +1,8 @@
 package com.example.ratul.pocketlends;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
     private final String _URL ="/login";
@@ -34,12 +39,9 @@ public class Login extends AppCompatActivity {
                 }
                 else
                 {
-                    String[] REQ_S = new String[3];
-                    REQ_S[0] = REQUEST_URL;
-                    REQ_S[1] = "POST";
-                    REQ_S[2] = Utils.toJson(username.getText().toString(),password.getText().toString());
+                    String payload_json = Utils.toJson(username.getText().toString(),password.getText().toString());
                     LoginAsyncTask task = new LoginAsyncTask();
-                    task.execute(REQ_S);
+                    task.execute(REQUEST_URL,"POST",payload_json);
                 }
             }
         });
@@ -52,27 +54,45 @@ public class Login extends AppCompatActivity {
         toast.show();
     }
 
-    private class LoginAsyncTask extends AsyncTask<String[],Void,String> {
+    private class LoginAsyncTask extends AsyncTask<String,Void,String> {
         @Override
-        protected String doInBackground(String[]... HTTPdata) {
+        protected String doInBackground(String... HTTPdata) {
 
             if (HTTPdata.length < 1 || HTTPdata[0] == null) {
                 return null;
             }
-
-            String[] REQ_S = new String[3];
-            REQ_S = HTTPdata[0];
-            String result = Utils.fetchData(REQ_S[0], REQ_S[1], REQ_S[2]);
+            String result = Utils.fetchData(HTTPdata[0],HTTPdata[1],HTTPdata[2]);
             return result;
         }
 
         @Override
         protected void onPostExecute(String result) {
             // If there is no result, do nothing.
+            String access_token="";
+            String refresh_token="";
             if (result == null) {
+                showToast("credentials invalid");
                 return;
             }
-            showToast(result);
+            //showToast(result);
+            try {
+                JSONObject JWTtoken = new JSONObject(result);
+                access_token = JWTtoken.getString("access_token");
+                refresh_token = JWTtoken.getString("refresh_token");
+
+            }catch (JSONException e)
+            {
+
+            }
+            SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey),Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref_file.edit();
+
+            editor.putString("access_token",access_token);
+            editor.putString("refresh_token",refresh_token);
+            editor.apply();
+            showToast("Login succesful !");
+            Intent Dashboard_intent = new Intent(Login.this,Dashboard.class);
+            startActivity(Dashboard_intent);
         }
 
     }

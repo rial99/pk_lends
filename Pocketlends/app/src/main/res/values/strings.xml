@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Pocket lends</string>
     <string name="domain_name">http://finishproject.in:5094</string>
+    <string name="pocketlends_preferenceFileKey">JWTtoken</string>
+
 </resources>
