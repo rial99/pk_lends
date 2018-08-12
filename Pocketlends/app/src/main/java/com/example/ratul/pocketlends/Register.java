@@ -4,22 +4,22 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Register extends AppCompatActivity {
-    private final String REQUEST_URL ="http://finishproject.in:5094/register";
+    private final String _URL ="/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        String domain = getString(R.string.domain_name);
+        final String REQUEST_URL = domain+_URL;
 
         final Button signIn_button = (Button) findViewById(R.id.signIn_button);
 
@@ -28,7 +28,6 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 EditText username = (EditText) findViewById(R.id.username);
                 EditText password = (EditText) findViewById(R.id.password);
-                Log.i("Register: ","inside onclick ");
                 if (Utils.isEmpty(username) || Utils.isEmpty(password))
                 {
                     showToast("please provide username and password");
@@ -38,7 +37,7 @@ public class Register extends AppCompatActivity {
                     String[] REQ_S = new String[3];
                     REQ_S[0] = REQUEST_URL;
                     REQ_S[1] = "POST";
-                    REQ_S[2] = toJson(username.getText().toString(),password.getText().toString());
+                    REQ_S[2] = Utils.toJson(username.getText().toString(),password.getText().toString());
                     RegisterAsyncTask task = new RegisterAsyncTask();
                     task.execute(REQ_S);
                 }
@@ -52,21 +51,6 @@ public class Register extends AppCompatActivity {
         final Context context = getApplicationContext();
         Toast toast = Toast.makeText(context, data, duration);
         toast.show();
-    }
-
-    private String toJson(String username,String password)
-    {
-        JSONObject json = new JSONObject();
-        try {
-            json.put("username",username);
-            json.put("password",password);
-
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return json.toString();
     }
 
     private class RegisterAsyncTask extends AsyncTask<String[],Void,String>{
@@ -91,6 +75,4 @@ public class Register extends AppCompatActivity {
             showToast(result);
         }
     }
-
-
 }

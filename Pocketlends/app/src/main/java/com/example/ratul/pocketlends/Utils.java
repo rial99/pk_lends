@@ -3,6 +3,9 @@ package com.example.ratul.pocketlends;
 import android.util.Log;
 import android.widget.EditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +17,21 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class Utils {
+
+    public static String toJson(String username,String password)
+    {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("username",username);
+            json.put("password",password);
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return json.toString();
+    }
 
     /** Tag for the log messages */
     public static final String LOG_TAG = Utils.class.getSimpleName();
