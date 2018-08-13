@@ -37,7 +37,7 @@ public class Register extends AppCompatActivity {
                 {
                     String payload_json = Utils.toJson(username.getText().toString(),password.getText().toString());
                     RegisterAsyncTask task = new RegisterAsyncTask();
-                    task.execute(REQUEST_URL,"POST",payload_json);
+                    task.execute(REQUEST_URL,"POST",payload_json,null);
                 }
             }
         });
@@ -58,7 +58,7 @@ public class Register extends AppCompatActivity {
             if (HTTPdata.length < 1 || HTTPdata[0] == null) {
                 return null;
             }
-            String result = Utils.fetchData(HTTPdata[0],HTTPdata[1],HTTPdata[2]);
+            String result = Utils.fetchData(HTTPdata[0],HTTPdata[1],HTTPdata[2],HTTPdata[3]);
             return result;
         }
         @Override

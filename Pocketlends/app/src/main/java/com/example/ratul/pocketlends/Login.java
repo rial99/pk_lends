@@ -61,7 +61,7 @@ public class Login extends AppCompatActivity {
             if (HTTPdata.length < 1 || HTTPdata[0] == null) {
                 return null;
             }
-            String result = Utils.fetchData(HTTPdata[0],HTTPdata[1],HTTPdata[2]);
+            String result = Utils.fetchData(HTTPdata[0],HTTPdata[1],HTTPdata[2],null);
             return result;
         }
 

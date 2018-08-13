@@ -20,12 +20,12 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class Utils {
-    public static String fetchData(String requestUrl,String method,String payload)
+    public static String fetchData(String requestUrl,String method,String payload,String acess_token)
     {
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {
-            jsonResponse = makeHttpRequest(url,method,payload);
+            jsonResponse = makeHttpRequest(url,method,payload,acess_token);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
@@ -60,6 +60,29 @@ public class Utils {
      * Returns new URL object from the given string URL.
      */
 
+    public static User extractUserFeatureFromJson(String userJson)
+    {
+        String username="";
+        String invest_amt = "";
+        String lend_amt = "";
+        String borrow_amt = "";
+        if (TextUtils.isEmpty(userJson)) {
+            return null;
+        }
+        try {
+            JSONObject user = new JSONObject(userJson);
+            username = user.getString("username");
+            invest_amt = user.getString("invest_amt");
+            lend_amt = user.getString("lend_amt");
+            borrow_amt = user.getString("borrow_amt");
+            return new User(username,invest_amt,lend_amt,borrow_amt);
+        }catch (JSONException e)
+        {
+            Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
+
+        }
+        return null;
+    }
 
     private static URL createUrl(String stringUrl) {
         URL url = null;
@@ -71,7 +94,7 @@ public class Utils {
         return url;
     }
 
-    private static String makeHttpRequest(URL url,String method,String payload)throws IOException
+    private static String makeHttpRequest(URL url,String method,String payload,String acess_token)throws IOException
     {
         String jsonResponse = null;
         // If the URL is null, then return early.
@@ -83,16 +106,23 @@ public class Utils {
 
         try {
             //preliminary header file configurations
+            urlConnection.setRequestMethod(method);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
-            urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            urlConnection.setRequestMethod(method);
+            if (acess_token != null)
+            {
+                urlConnection.setRequestProperty("Authorization","Bearer "+acess_token);
+            }
 
-            //for writing the post request
-            OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8");
-            writer.write(payload);
-            writer.close();
+            if(payload != null)
+            {
+                urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                //for writing the post request
+                OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8");
+                writer.write(payload);
+                writer.close();
+            }
 
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
