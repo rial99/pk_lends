@@ -106,8 +106,8 @@ public class Utils {
 
         try {
             //preliminary header file configurations
-            urlConnection.setRequestMethod(method);
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod(method);
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
             if (acess_token != null)

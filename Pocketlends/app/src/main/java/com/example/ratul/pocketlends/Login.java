@@ -91,8 +91,8 @@ public class Login extends AppCompatActivity {
             editor.putString("refresh_token",refresh_token);
             editor.apply();
             showToast("Login succesful !");
-            Intent Dashboard_intent = new Intent(Login.this,Dashboard.class);
-            startActivity(Dashboard_intent);
+            Intent MainActivity_intent = new Intent(Login.this,MainActivity.class);
+            startActivity(MainActivity_intent);
         }
 
     }

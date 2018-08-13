@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             task.execute(url,"GET",null,refresh_token);
 
             UserDataAsyncTask UserTask = new UserDataAsyncTask();
-            task.execute(urlUser,"GET",null,pref_file.getString("access_token",""));
+            UserTask.execute(urlUser,"GET",null,pref_file.getString("access_token",""));
 
         }
         else
