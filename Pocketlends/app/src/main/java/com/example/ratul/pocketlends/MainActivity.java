@@ -14,13 +14,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
+
+        final SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
         if (pref_file.contains("access_token") && pref_file.contains("refresh_token"))
         {
             setContentView(R.layout.activity_main);
@@ -28,16 +31,28 @@ public class MainActivity extends AppCompatActivity {
             String refresh_token = pref_file.getString("refresh_token","");
 
             String _urlUser = "/user_info";
-            String _url = "/refresh_token";
+            String _urlRefresh = "/refresh_token";
+            String _urlLogout = "/logout";
 
-            String url = getString(R.string.domain_name)+_url;
+            String urlRefresh = getString(R.string.domain_name)+_urlRefresh;
             String urlUser = getString(R.string.domain_name)+_urlUser;
+            final String urlLogout = getString(R.string.domain_name)+_urlLogout;
 
             RefreshAsyncTask task = new RefreshAsyncTask();
-            task.execute(url,"GET",null,refresh_token);
+            task.execute(urlRefresh,"GET",null,refresh_token);
 
             UserDataAsyncTask UserTask = new UserDataAsyncTask();
             UserTask.execute(urlUser,"GET",null,pref_file.getString("access_token",""));
+
+            Button LogOutButton =(Button) findViewById(R.id.Log_out_B);
+            LogOutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    LogOutAsyncTask logoutTask = new LogOutAsyncTask();
+                    logoutTask.execute(urlLogout,"GET",null,pref_file.getString("access_token",""));
+                }
+            });
 
         }
         else
@@ -124,6 +139,33 @@ public class MainActivity extends AppCompatActivity {
             }
             User u = Utils.extractUserFeatureFromJson(result);
             updateui(u);
+        }
+    }
+
+    private class LogOutAsyncTask extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... HTTPdata) {
+
+            if (HTTPdata.length < 1 || HTTPdata[0] == null) {
+                return null;
+            }
+            String result = Utils.fetchData(HTTPdata[0],HTTPdata[1],HTTPdata[2],HTTPdata[3]);
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            // If there is no result, do nothing.
+            if (result == null) {
+                return;
+            }
+            File sharedPreferenceFile = new File("/data/data/"+ getPackageName()+ "/shared_prefs/");
+            File[] listFiles = sharedPreferenceFile.listFiles();
+            for (File file : listFiles) {
+                file.delete();
+            }
+            showToast(result);
+            Intent Login_intent = new Intent(MainActivity.this,Login.class);
+            startActivity(Login_intent);
         }
     }
 
