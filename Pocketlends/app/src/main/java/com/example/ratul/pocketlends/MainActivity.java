@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            Intent i = new Intent(MainActivity.this,Dashboard.class);
+            Intent i = new Intent(MainActivity.this,Register.class);
             startActivity(i);
         }
 
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         TextView borrow_amt = (TextView) findViewById(R.id.borrow_amt);
         borrow_amt.setText(u.Borrow_amt);
     }
+
     private class RefreshAsyncTask extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... HTTPdata) {
@@ -102,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
     private class UserDataAsyncTask extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... HTTPdata) {
@@ -123,4 +126,6 @@ public class MainActivity extends AppCompatActivity {
             updateui(u);
         }
     }
+
+
 }

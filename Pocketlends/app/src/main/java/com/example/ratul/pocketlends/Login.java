@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -26,6 +27,15 @@ public class Login extends AppCompatActivity {
         final String REQUEST_URL = domain+_URL;
 
         final Button logIn_button = (Button) findViewById(R.id.login_button);
+        final TextView sign_in_button = (TextView) findViewById(R.id.sign_up_button);
+
+        sign_in_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent SignI = new Intent(Login.this,Register.class);
+                startActivity(SignI);
+            }
+        });
 
         logIn_button.setOnClickListener(new View.OnClickListener() {
             @Override

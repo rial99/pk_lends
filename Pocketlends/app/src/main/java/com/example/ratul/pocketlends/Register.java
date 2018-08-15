@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -23,6 +24,15 @@ public class Register extends AppCompatActivity {
         final String REQUEST_URL = domain+_URL;
 
         final Button signIn_button = (Button) findViewById(R.id.signIn_button);
+        final TextView Log_in_button = (TextView) findViewById(R.id.Log_in_button);
+
+        Log_in_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent LogI = new Intent(Register.this,Login.class);
+                startActivity(LogI);
+            }
+        });
 
         signIn_button.setOnClickListener(new View.OnClickListener() {
             @Override

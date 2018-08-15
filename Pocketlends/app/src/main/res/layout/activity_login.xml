@@ -15,7 +15,7 @@
         android:layout_marginTop="159dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="username" />
 
     <EditText
         android:id="@+id/password"
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:ems="10"
+        android:hint="password"
         android:inputType="textPassword" />
 
     <Button
@@ -45,5 +46,20 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="71dp"
         android:text="Log In"
-        android:textSize="40sp" />
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sign_up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="94dp"
+        android:text="Create an account"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>
