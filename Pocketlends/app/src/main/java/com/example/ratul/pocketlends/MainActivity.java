@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
             String _urlRefresh = "/refresh_token";
             String _urlLogout = "/logout";
 
-            String urlRefresh = getString(R.string.domain_name)+_urlRefresh;
-            String urlUser = getString(R.string.domain_name)+_urlUser;
+            final String urlRefresh = getString(R.string.domain_name)+_urlRefresh;
+            final String urlUser = getString(R.string.domain_name)+_urlUser;
             final String urlLogout = getString(R.string.domain_name)+_urlLogout;
 
             RefreshAsyncTask task = new RefreshAsyncTask();
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             LogOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    RefreshAsyncTask before_logout = new RefreshAsyncTask();
+                    before_logout.execute(urlRefresh,"GET",null,pref_file.getString("refresh_token",""));
 
                     LogOutAsyncTask logoutTask = new LogOutAsyncTask();
                     logoutTask.execute(urlLogout,"GET",null,pref_file.getString("access_token",""));
