@@ -10,9 +10,9 @@
         android:id="@+id/username"
         android:layout_width="302dp"
         android:layout_height="72dp"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="39dp"
         android:textSize="60sp" />
 
@@ -20,9 +20,9 @@
         android:id="@+id/invest_amt"
         android:layout_width="132dp"
         android:layout_height="67dp"
-        android:layout_alignEnd="@+id/username"
+        android:layout_alignRight="@+id/username"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
         android:layout_marginTop="137dp"
         android:textSize="36sp" />
 
@@ -30,7 +30,7 @@
         android:id="@+id/lend_amt"
         android:layout_width="132dp"
         android:layout_height="62dp"
-        android:layout_alignStart="@+id/borrow_amt"
+        android:layout_alignLeft="@+id/borrow_amt"
         android:layout_alignTop="@+id/textView14"
         android:textSize="36sp" />
 
@@ -39,14 +39,14 @@
         android:layout_width="132dp"
         android:layout_height="63dp"
         android:layout_alignBottom="@+id/textView15"
-        android:layout_alignEnd="@+id/username"
+        android:layout_alignRight="@+id/username"
         android:textSize="36sp" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="121dp"
         android:layout_height="67dp"
-        android:layout_alignStart="@+id/username"
+        android:layout_alignLeft="@+id/username"
         android:layout_alignTop="@+id/invest_amt"
         android:text="invest amount"
         android:textSize="24sp" />
@@ -55,7 +55,7 @@
         android:id="@+id/textView14"
         android:layout_width="121dp"
         android:layout_height="64dp"
-        android:layout_alignStart="@+id/username"
+        android:layout_alignLeft="@+id/username"
         android:layout_centerVertical="true"
         android:text="lend amount"
         android:textSize="24sp" />
@@ -65,7 +65,7 @@
         android:layout_width="121dp"
         android:layout_height="63dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/username"
+        android:layout_alignLeft="@+id/username"
         android:layout_marginBottom="139dp"
         android:text="borrow amount"
         android:textSize="24sp" />
