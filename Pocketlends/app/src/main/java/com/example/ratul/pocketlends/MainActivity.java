@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         final SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
-        if (pref_file.contains("access_token") && pref_file.contains("refresh_token"))
+        if (pref_file.getString("access_token","") != "" && pref_file.getString("refresh_token","") != "")
         {
             setContentView(R.layout.activity_main);
 
@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
     private void showToast(String data)
     {
         final int duration = Toast.LENGTH_SHORT;
@@ -122,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private class UserDataAsyncTask extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... HTTPdata) {
@@ -161,12 +162,14 @@ public class MainActivity extends AppCompatActivity {
             if (result == null) {
                 return;
             }
-            File sharedPreferenceFile = new File("/data/data/"+ getPackageName()+ "/shared_prefs/");
-            File[] listFiles = sharedPreferenceFile.listFiles();
-            for (File file : listFiles) {
-                file.delete();
-            }
+            SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref_file.edit();
+            editor.putString("access_token","");
+            editor.putString("refresh_token","");
+            editor.apply();
+
             showToast(result);
+
             Intent Login_intent = new Intent(MainActivity.this,Login.class);
             startActivity(Login_intent);
         }
