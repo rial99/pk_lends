@@ -45,6 +45,23 @@ public class MainActivity extends AppCompatActivity {
             UserTask.execute(urlUser,"GET",null,pref_file.getString("access_token",""));
 
             Button LogOutButton =(Button) findViewById(R.id.Log_out_B);
+            Button InvestButton = (Button) findViewById(R.id.add);
+            Button WithdrawButton = (Button) findViewById(R.id.withdraw);
+
+            InvestButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(MainActivity.this,invest.class);
+                    startActivity(i);
+                }
+            });
+            WithdrawButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(MainActivity.this,withdraw.class);
+                    startActivity(i);
+                }
+            });
             LogOutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
