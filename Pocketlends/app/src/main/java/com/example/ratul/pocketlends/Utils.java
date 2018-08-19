@@ -20,6 +20,12 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class Utils {
+    static String _urlUser = "/user_info";
+    static String _urlRefresh = "/refresh_token";
+    static String _urlLogout = "/logout";
+    static String _urlRegister ="/register";
+    static String _urlLogin ="/login";
+
     public static String fetchData(String requestUrl,String method,String payload,String acess_token)
     {
         URL url = createUrl(requestUrl);

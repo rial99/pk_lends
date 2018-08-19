@@ -16,7 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
-    private final String _URL ="/login";
+    private final String _urlLogin ="/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         String domain = getString(R.string.domain_name);
-        final String REQUEST_URL = domain+_URL;
+        final String REQUEST_URL = domain+_urlLogin;
 
         final Button logIn_button = (Button) findViewById(R.id.login_button);
         final TextView sign_in_button = (TextView) findViewById(R.id.sign_up_button);

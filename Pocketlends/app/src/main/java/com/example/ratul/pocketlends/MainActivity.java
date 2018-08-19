@@ -14,7 +14,6 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,14 +28,9 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
 
             String refresh_token = pref_file.getString("refresh_token","");
-
-            String _urlUser = "/user_info";
-            String _urlRefresh = "/refresh_token";
-            String _urlLogout = "/logout";
-
-            final String urlRefresh = getString(R.string.domain_name)+_urlRefresh;
-            final String urlUser = getString(R.string.domain_name)+_urlUser;
-            final String urlLogout = getString(R.string.domain_name)+_urlLogout;
+            final String urlRefresh = getString(R.string.domain_name)+Utils._urlRefresh;
+            final String urlUser = getString(R.string.domain_name)+Utils._urlUser;
+            final String urlLogout = getString(R.string.domain_name)+Utils._urlLogout;
 
             RefreshAsyncTask task = new RefreshAsyncTask();
             task.execute(urlRefresh,"GET",null,refresh_token);
@@ -189,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent Login_intent = new Intent(MainActivity.this,Login.class);
             startActivity(Login_intent);
+            finish();
         }
     }
 
