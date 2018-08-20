@@ -6,23 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".invest">
 
+    <TextView
+        android:id="@+id/order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="66dp"
+        android:text="ORDER ID"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/amount"
-        android:layout_width="wrap_content"
+        android:layout_width="279dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp"
-        android:ems="10"
-        android:hint="amount"
-        android:inputType="textPersonName" />
+        android:layout_marginTop="158dp"
+        android:textAlignment="center"
+        android:inputType="number"
+        android:textSize="30sp" />
 
     <Button
-        android:id="@+id/razorpay_via"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/order_id_button"
+        android:layout_width="122dp"
+        android:layout_height="45dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="169dp"
-        android:text="pay via razorpay" />
+        android:layout_marginTop="251dp"
+        android:background="@drawable/buttonshape"
+        android:text="GET"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/order_id"
+        android:layout_width="292dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="163dp"
+        android:text="order id"
+        android:textAlignment="center"
+        android:textSize="36sp" />
 </RelativeLayout>

@@ -25,6 +25,7 @@ public class Utils {
     static String _urlLogout = "/logout";
     static String _urlRegister ="/register";
     static String _urlLogin ="/login";
+    static String _urlInvest = "/invest";
 
     public static String fetchData(String requestUrl,String method,String payload,String acess_token)
     {
@@ -165,7 +166,6 @@ public class Utils {
         }
         return output.toString();
     }
-
 
 
 }

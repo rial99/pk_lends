@@ -17,12 +17,13 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences pref_file=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        final SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
+        pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
         if (pref_file.getString("access_token","") != "" && pref_file.getString("refresh_token","") != "")
         {
             setContentView(R.layout.activity_main);
@@ -126,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
             {
 
             }
-            SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref_file.edit();
             editor.putString("access_token",access_token);
             editor.apply();
@@ -173,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
             if (result == null) {
                 return;
             }
-            SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref_file.edit();
             editor.putString("access_token","");
             editor.putString("refresh_token","");
