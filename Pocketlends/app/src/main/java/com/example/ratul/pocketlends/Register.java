@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 
 public class Register extends AppCompatActivity {
-    private final String _urlRegister ="/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,7 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         String domain = getString(R.string.domain_name);
-        final String REQUEST_URL = domain+_urlRegister;
+        final String REQUEST_URL = domain+Utils._urlRegister;
 
         final Button signIn_button = (Button) findViewById(R.id.signIn_button);
         final TextView Log_in_button = (TextView) findViewById(R.id.Log_in_button);
