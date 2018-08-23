@@ -22,8 +22,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String domain = getString(R.string.domain_name);
-        final String REQUEST_URL = domain+Utils._urlLogin;
+        Utils._domain = getString(R.string.domain_name);
+        final String REQUEST_URL = Utils._domain+Utils._urlLogin;
 
         final Button logIn_button = (Button) findViewById(R.id.login_button);
         final TextView sign_in_button = (TextView) findViewById(R.id.sign_up_button);
@@ -93,8 +93,8 @@ public class Login extends AppCompatActivity {
             {
 
             }
-            SharedPreferences pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey),Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref_file.edit();
+            Utils.pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey),Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = Utils.pref_file.edit();
 
             editor.putString("access_token",access_token);
             editor.putString("refresh_token",refresh_token);

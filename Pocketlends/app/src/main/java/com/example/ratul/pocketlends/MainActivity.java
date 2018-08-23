@@ -17,27 +17,25 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences pref_file=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
-        if (pref_file.getString("access_token","") != "" && pref_file.getString("refresh_token","") != "")
+        Utils.pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
+        Utils._domain = getString(R.string.domain_name);
+        if (Utils.pref_file.getString("access_token","") != "" && Utils.pref_file.getString("refresh_token","") != "")
         {
             setContentView(R.layout.activity_main);
 
-            String refresh_token = pref_file.getString("refresh_token","");
-            final String urlRefresh = getString(R.string.domain_name)+Utils._urlRefresh;
-            final String urlUser = getString(R.string.domain_name)+Utils._urlUser;
-            final String urlLogout = getString(R.string.domain_name)+Utils._urlLogout;
 
-            RefreshAsyncTask task = new RefreshAsyncTask();
-            task.execute(urlRefresh,"GET",null,refresh_token);
+            final String urlUser = Utils._domain+Utils._urlUser;
+            final String urlLogout = Utils._domain+Utils._urlLogout;
+
+            Utils.refreshTokens();
 
             UserDataAsyncTask UserTask = new UserDataAsyncTask();
-            UserTask.execute(urlUser,"GET",null,pref_file.getString("access_token",""));
+            UserTask.execute(urlUser,"GET",null,Utils.pref_file.getString("access_token",""));
 
             Button LogOutButton =(Button) findViewById(R.id.Log_out_B);
             Button InvestButton = (Button) findViewById(R.id.add);
@@ -61,11 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    RefreshAsyncTask before_logout = new RefreshAsyncTask();
-                    before_logout.execute(urlRefresh,"GET",null,pref_file.getString("refresh_token",""));
+                    Utils.refreshTokens();
 
                     LogOutAsyncTask logoutTask = new LogOutAsyncTask();
-                    logoutTask.execute(urlLogout,"GET",null,pref_file.getString("access_token",""));
+                    logoutTask.execute(urlLogout,"GET",null,Utils.pref_file.getString("access_token",""));
                 }
             });
 
@@ -102,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         borrow_amt.setText(u.Borrow_amt);
     }
 
-    private class RefreshAsyncTask extends AsyncTask<String,Void,String> {
+    public class RefreshAsyncTask extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... HTTPdata) {
 
@@ -127,10 +124,9 @@ public class MainActivity extends AppCompatActivity {
             {
 
             }
-            SharedPreferences.Editor editor = pref_file.edit();
+            SharedPreferences.Editor editor = Utils.pref_file.edit();
             editor.putString("access_token",access_token);
             editor.apply();
-            showToast("refresh succesful !");
 
         }
     }
@@ -173,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             if (result == null) {
                 return;
             }
-            SharedPreferences.Editor editor = pref_file.edit();
+            SharedPreferences.Editor editor = Utils.pref_file.edit();
             editor.putString("access_token","");
             editor.putString("refresh_token","");
             editor.apply();

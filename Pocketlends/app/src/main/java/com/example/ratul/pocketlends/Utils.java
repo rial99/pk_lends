@@ -1,5 +1,6 @@
 package com.example.ratul.pocketlends;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 public class Utils {
+    static SharedPreferences pref_file=null;
+    static String _domain="";
     static String _urlUser = "/user_info";
     static String _urlRefresh = "/refresh_token";
     static String _urlLogout = "/logout";
@@ -37,6 +40,13 @@ public class Utils {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
         return jsonResponse;
+    }
+
+    public static void refreshTokens()
+    {
+        String urlRefresh = _domain+_urlRefresh;
+        MainActivity.RefreshAsyncTask task = new MainActivity().new RefreshAsyncTask();
+        task.execute(urlRefresh,"GET",null,pref_file.getString("refresh_token",""));
     }
 
     public static String toJson(String username,String password)

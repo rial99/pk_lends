@@ -17,16 +17,13 @@ import org.json.JSONObject;
 
 public class invest extends AppCompatActivity {
 
-    SharedPreferences pref_file=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invest);
-        pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
 
-        String domain = getString(R.string.domain_name);
-        final String REQUEST_URL = domain+Utils._urlInvest;
+        final String REQUEST_URL = Utils._domain+Utils._urlInvest;
         Button order_id_button = (Button) findViewById(R.id.order_id_button);
         final EditText amount = (EditText) findViewById(R.id.amount);
         order_id_button.setOnClickListener(new View.OnClickListener() {
@@ -38,10 +35,11 @@ public class invest extends AppCompatActivity {
                 }
                 else {
                     try {
+                        Utils.refreshTokens();
                         JSONObject payload = new JSONObject();
                         payload.put("invest_amt", Integer.parseInt(amount.getText().toString()));
                         InvestAsyncTask invest =new InvestAsyncTask();
-                        invest.execute(REQUEST_URL,"POST",payload.toString(),pref_file.getString("access_token",""));
+                        invest.execute(REQUEST_URL,"POST",payload.toString(),Utils.pref_file.getString("access_token",""));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

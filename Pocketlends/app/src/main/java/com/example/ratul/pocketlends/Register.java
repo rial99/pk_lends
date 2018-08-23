@@ -19,8 +19,8 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        String domain = getString(R.string.domain_name);
-        final String REQUEST_URL = domain+Utils._urlRegister;
+        Utils._domain = getString(R.string.domain_name);
+        final String REQUEST_URL = Utils._domain+Utils._urlRegister;
 
         final Button signIn_button = (Button) findViewById(R.id.signIn_button);
         final TextView Log_in_button = (TextView) findViewById(R.id.Log_in_button);

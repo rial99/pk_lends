@@ -29,7 +29,7 @@
             android:name=".Login"
             android:noHistory="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".invest" />
+        <activity android:name=".invest" android:screenOrientation="portrait" />
         <activity android:name=".withdraw"></activity>
 
         <meta-data
