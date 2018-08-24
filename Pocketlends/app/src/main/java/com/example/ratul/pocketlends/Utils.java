@@ -29,6 +29,7 @@ public class Utils {
     static String _urlRegister ="/register";
     static String _urlLogin ="/login";
     static String _urlInvest = "/invest";
+    static String _urlWithdraw = "/withdraw";
 
     public static String fetchData(String requestUrl,String method,String payload,String acess_token)
     {

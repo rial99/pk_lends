@@ -4,50 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".invest">
+    tools:context=".Invest">
 
     <TextView
-        android:id="@+id/order"
+        android:id="@+id/request_type"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="31dp"
+        android:text="Invest Request"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <RelativeLayout
+        android:id="@+id/getOrderView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="66dp"
-        android:text="ORDER ID"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="78dp"
+        android:visibility="visible">
 
-    <EditText
-        android:id="@+id/amount"
-        android:layout_width="279dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="158dp"
-        android:textAlignment="center"
-        android:inputType="number"
-        android:textSize="30sp" />
+        <TextView
+            android:id="@+id/amount_txt_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="19dp"
+            android:text="amount :"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/order_id_button"
-        android:layout_width="122dp"
-        android:layout_height="45dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="251dp"
-        android:background="@drawable/buttonshape"
-        android:text="GET"
-        android:textSize="30sp" />
+        <EditText
+            android:id="@+id/amount_requested"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:inputType="number" />
 
-    <TextView
-        android:id="@+id/order_id"
-        android:layout_width="292dp"
-        android:layout_height="60dp"
+        <Button
+            android:id="@+id/getOrder_button"
+            android:layout_width="85dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="19dp"
+            android:background="@drawable/buttonshape"
+            android:text="get" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/orderDetailsView"
+        android:layout_width="match_parent"
+        android:layout_height="426dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="163dp"
-        android:text="order id"
-        android:textAlignment="center"
-        android:textSize="36sp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="0dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/order_detailsImageView"
+            android:layout_width="302dp"
+            android:layout_height="231dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/order_details" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="71dp"
+            android:layout_marginTop="108dp"
+            android:text="amount :"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/invest_request_amount"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textView3"
+            android:layout_marginEnd="63dp"
+            android:text="0"
+            android:textAlignment="viewStart"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="78dp"
+            android:layout_height="43dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="165dp"
+            android:background="@drawable/button_cancel"
+            android:text="cancel"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/order_id_imageView"
+            android:layout_width="326dp"
+            android:layout_height="121dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="39dp"
+            android:background="@drawable/order_id" />
+
+        <TextView
+            android:id="@+id/order_id"
+            android:layout_width="252dp"
+            android:layout_height="33dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="64dp"
+            android:text="PK000000000000"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

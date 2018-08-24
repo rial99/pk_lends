@@ -44,15 +44,14 @@ public class MainActivity extends AppCompatActivity {
             InvestButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(MainActivity.this,invest.class);
+                    Intent i = new Intent(MainActivity.this,Invest.class);
                     startActivity(i);
                 }
             });
             WithdrawButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(MainActivity.this,withdraw.class);
-                    startActivity(i);
+
                 }
             });
             LogOutButton.setOnClickListener(new View.OnClickListener() {

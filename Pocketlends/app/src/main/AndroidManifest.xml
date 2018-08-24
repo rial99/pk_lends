@@ -29,13 +29,7 @@
             android:name=".Login"
             android:noHistory="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".invest" android:screenOrientation="portrait" />
-        <activity android:name=".withdraw"></activity>
-
-        <meta-data
-            android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_8AIlUOqPprMMmU"
-            />
+        <activity android:name=".Invest" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
