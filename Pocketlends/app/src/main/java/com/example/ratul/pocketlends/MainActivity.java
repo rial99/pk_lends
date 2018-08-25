@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    String urlUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +31,10 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
 
 
-            final String urlUser = Utils._domain+Utils._urlUser;
+            urlUser = Utils._domain+Utils._urlUser;
             final String urlLogout = Utils._domain+Utils._urlLogout;
 
-            Utils.refreshTokens();
-
-            UserDataAsyncTask UserTask = new UserDataAsyncTask();
-            UserTask.execute(urlUser,"GET",null,Utils.pref_file.getString("access_token",""));
+            refreshData();
 
             Button LogOutButton =(Button) findViewById(R.id.Log_out_B);
             Button InvestButton = (Button) findViewById(R.id.add);
@@ -73,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void refreshData() {
+        Utils.refreshTokens();
+
+        UserDataAsyncTask UserTask = new UserDataAsyncTask();
+        UserTask.execute(urlUser,"GET",null,Utils.pref_file.getString("access_token",""));
     }
 
 

@@ -38,7 +38,7 @@
 
         <EditText
             android:id="@+id/amount_requested"
-            android:layout_width="156dp"
+            android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -85,12 +85,12 @@
 
         <TextView
             android:id="@+id/invest_request_amount"
-            android:layout_width="143dp"
+            android:layout_width="123dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/textView3"
             android:layout_marginEnd="63dp"
-            android:text="0"
+            android:text="---"
             android:textAlignment="viewStart"
             android:textSize="24sp" />
 
@@ -121,7 +121,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="64dp"
-            android:text="PK000000000000"
+            android:textIsSelectable="true"
+            android:text="-----------"
             android:textSize="24sp" />
 
     </RelativeLayout>
