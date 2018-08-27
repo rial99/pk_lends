@@ -44,12 +44,16 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(MainActivity.this,Invest.class);
+                    i.putExtra("option","invest");
                     startActivity(i);
                 }
             });
             WithdrawButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent i = new Intent(MainActivity.this,Invest.class);
+                    i.putExtra("option","withdraw");
+                    startActivity(i);
 
                 }
             });

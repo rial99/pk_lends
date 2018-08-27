@@ -24,6 +24,10 @@ public class Invest extends AppCompatActivity {
     EditText AmountRequested;
     Button getOrder_button;
     Button ButtonCancel;
+
+    String RequestUrl;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,20 @@ public class Invest extends AppCompatActivity {
         getOrder_button=(Button) findViewById(R.id.getOrder_button);
         ButtonCancel = (Button) findViewById(R.id.cancel);
         AmountRequested = (EditText) findViewById(R.id.amount_requested);
+
+        Intent intent = getIntent();
+        String option = intent.getStringExtra("option");
+        switch(option)
+        {
+            case "invest":
+                RequestUrl = Utils._domain+Utils._urlInvest;
+                break;
+
+            case "withdraw":
+                RequestUrl = Utils._domain+Utils._urlWithdraw;
+                break;
+        }
+
         invest();
     }
     private void showToast(String data)
@@ -49,7 +67,7 @@ public class Invest extends AppCompatActivity {
     {
         Utils.refreshTokens();
         CheckInvestAsyncTask checkInvest = new CheckInvestAsyncTask();
-        checkInvest.execute(Utils._domain+Utils._urlInvest,"GET",null,Utils.pref_file.getString("access_token",""));
+        checkInvest.execute(RequestUrl,"GET",null,Utils.pref_file.getString("access_token",""));
     }
 
     private class CheckInvestAsyncTask extends AsyncTask<String,Void,String> {
@@ -100,14 +118,14 @@ public class Invest extends AppCompatActivity {
                     amount_int = Integer.parseInt(amount);
                     JSONObject addJson = new JSONObject();
                     try {
-                        addJson.put("invest_amt",amount_int);
+                        addJson.put("amt",amount_int);
                         addJson.put("options","add");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     InvestAsyncTask add = new InvestAsyncTask();
-                    add.execute(Utils._domain+Utils._urlInvest,"POST",addJson.toString(),Utils.pref_file.getString("access_token",""));
+                    add.execute(RequestUrl,"POST",addJson.toString(),Utils.pref_file.getString("access_token",""));
                 }
             }
         });
@@ -138,7 +156,7 @@ public class Invest extends AppCompatActivity {
             public void onClick(View view) {
                 JSONObject cancelJson = new JSONObject();
                 try {
-                    cancelJson.put("invest_amt",0);
+                    cancelJson.put("amt",0);
                     cancelJson.put("options","cancel");
 
                 } catch (JSONException e) {
@@ -146,7 +164,7 @@ public class Invest extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 InvestAsyncTask cancel = new InvestAsyncTask();
-                cancel.execute(Utils._domain+Utils._urlInvest,"POST",cancelJson.toString(),Utils.pref_file.getString("access_token",""));
+                cancel.execute(RequestUrl,"POST",cancelJson.toString(),Utils.pref_file.getString("access_token",""));
             }
         });
     }
