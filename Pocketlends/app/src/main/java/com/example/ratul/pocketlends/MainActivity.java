@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
             Button LogOutButton =(Button) findViewById(R.id.Log_out_B);
             Button InvestButton = (Button) findViewById(R.id.add);
             Button WithdrawButton = (Button) findViewById(R.id.withdraw);
+            Button BorrowButton = (Button) findViewById(R.id.borrow);
+            Button RepayButton = (Button) findViewById(R.id.repay);
 
             InvestButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -54,6 +56,20 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(MainActivity.this,Invest.class);
                     i.putExtra("option","withdraw");
                     startActivity(i);
+
+                }
+            });
+            BorrowButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(MainActivity.this,Invest.class);
+                    i.putExtra("option","borrow");
+                    startActivity(i);
+                }
+            });
+            RepayButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
                 }
             });

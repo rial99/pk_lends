@@ -51,6 +51,10 @@ public class Invest extends AppCompatActivity {
             case "withdraw":
                 RequestUrl = Utils._domain+Utils._urlWithdraw;
                 break;
+
+            case "borrow":
+                RequestUrl = Utils._domain+Utils._urlBorrow;
+                break;
         }
 
         invest();
