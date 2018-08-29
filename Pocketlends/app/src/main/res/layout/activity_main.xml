@@ -104,12 +104,23 @@
 
         <TextView
             android:id="@+id/borrow_amt"
-            android:layout_width="130dp"
+            android:layout_width="93dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/invest_amt"
             android:layout_centerVertical="true"
             android:text="--"
             android:textSize="30sp" />
+
+        <TextView
+
+            android:id="@+id/borrow_interest"
+            android:layout_width="99dp"
+            android:layout_height="33dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/invest_amt"
+            android:text="--"
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/borrow"
@@ -148,6 +159,26 @@
             android:layout_marginBottom="58dp"
             android:text="--"
             android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/lend_interest"
+            android:layout_width="68dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/lend_amt"
+            android:layout_alignEnd="@+id/add"
+            android:text="0"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/withdraw"
+            android:layout_centerVertical="true"
+            android:text="+"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </RelativeLayout>

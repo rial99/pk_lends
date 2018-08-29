@@ -20,11 +20,11 @@ public class Invest extends AppCompatActivity {
     RelativeLayout orderDetailsView;
     RelativeLayout getOrderView;
     TextView invest_request_amount;
+    TextView R_type;
     TextView OTPTextView;
     EditText AmountRequested;
     Button getOrder_button;
     Button ButtonCancel;
-
     String RequestUrl;
 
 
@@ -36,6 +36,7 @@ public class Invest extends AppCompatActivity {
         orderDetailsView = (RelativeLayout) findViewById(R.id.orderDetailsView);
         invest_request_amount = (TextView) findViewById(R.id.invest_request_amount);
         OTPTextView = (TextView) findViewById(R.id.order_id);
+        R_type = (TextView) findViewById(R.id.request_type);
         getOrder_button=(Button) findViewById(R.id.getOrder_button);
         ButtonCancel = (Button) findViewById(R.id.cancel);
         AmountRequested = (EditText) findViewById(R.id.amount_requested);
@@ -46,14 +47,17 @@ public class Invest extends AppCompatActivity {
         {
             case "invest":
                 RequestUrl = Utils._domain+Utils._urlInvest;
+                R_type.setText("Invest Request");
                 break;
 
             case "withdraw":
                 RequestUrl = Utils._domain+Utils._urlWithdraw;
+                R_type.setText("Withdraw Request");
                 break;
 
             case "borrow":
                 RequestUrl = Utils._domain+Utils._urlBorrow;
+                R_type.setText("Borrow Request");
                 break;
         }
 

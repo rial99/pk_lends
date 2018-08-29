@@ -31,6 +31,7 @@ public class Utils {
     static String _urlInvest = "/invest";
     static String _urlWithdraw = "/withdraw";
     static String _urlBorrow = "/borrow";
+    static String _urlRepay = "/repay";
 
     public static String fetchData(String requestUrl,String method,String payload,String acess_token)
     {
@@ -85,6 +86,8 @@ public class Utils {
         String invest_amt = "";
         String lend_amt = "";
         String borrow_amt = "";
+        String interest_amt_L = "";
+        String interest_amt_B = "";
         if (TextUtils.isEmpty(userJson)) {
             return null;
         }
@@ -94,7 +97,9 @@ public class Utils {
             invest_amt = user.getString("invest_amt");
             lend_amt = user.getString("lend_amt");
             borrow_amt = user.getString("borrow_amt");
-            return new User(username,invest_amt,lend_amt,borrow_amt);
+            interest_amt_L = user.getString("interest_amt_L");
+            interest_amt_B = user.getString("interest_amt_B");
+            return new User(username,invest_amt,lend_amt,borrow_amt,interest_amt_L,interest_amt_B);
         }catch (JSONException e)
         {
             Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);

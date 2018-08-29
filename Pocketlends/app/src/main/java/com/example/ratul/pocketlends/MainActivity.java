@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             RepayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    RepayAsyncTask task = new RepayAsyncTask();
+                    task.execute(Utils._domain+Utils._urlRepay,"GET",null,Utils.pref_file.getString("access_token",""));
                 }
             });
             LogOutButton.setOnClickListener(new View.OnClickListener() {
@@ -100,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
         UserDataAsyncTask UserTask = new UserDataAsyncTask();
         UserTask.execute(urlUser,"GET",null,Utils.pref_file.getString("access_token",""));
     }
-
-
     private void showToast(String data)
     {
         final int duration = Toast.LENGTH_SHORT;
@@ -120,8 +119,14 @@ public class MainActivity extends AppCompatActivity {
         TextView lend_amt = (TextView) findViewById(R.id.lend_amt);
         lend_amt.setText(u.Lend_amt);
 
+        TextView Lend_interest = (TextView) findViewById(R.id.lend_interest);
+        Lend_interest.setText(u.Interest_amt_L);
+
         TextView borrow_amt = (TextView) findViewById(R.id.borrow_amt);
         borrow_amt.setText(u.Borrow_amt);
+
+        TextView Borrow_interest = (TextView) findViewById(R.id.borrow_interest);
+        Borrow_interest.setText(u.Interest_amt_B);
     }
 
     public class RefreshAsyncTask extends AsyncTask<String,Void,String> {
@@ -207,5 +212,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private class RepayAsyncTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... HTTPdata) {
+
+            if (HTTPdata.length < 1 || HTTPdata[0] == null) {
+                return null;
+            }
+            String result = Utils.fetchData(HTTPdata[0], HTTPdata[1], HTTPdata[2], HTTPdata[3]);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // If there is no result, do nothing.
+            if (result == null) {
+                return;
+            }
+            showToast(result);
+            Intent i = new Intent(MainActivity.this,MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+    }
 
 }
