@@ -32,6 +32,7 @@ public class Utils {
     static String _urlWithdraw = "/withdraw";
     static String _urlBorrow = "/borrow";
     static String _urlRepay = "/repay";
+    static String _urlStatus = "/status";
 
     public static String fetchData(String requestUrl,String method,String payload,String acess_token)
     {
@@ -132,8 +133,8 @@ public class Utils {
             //preliminary header file configurations
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod(method);
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(2000 /* milliseconds */);
+            urlConnection.setConnectTimeout(2500 /* milliseconds */);
             if (acess_token != null)
             {
                 urlConnection.setRequestProperty("Authorization","Bearer "+acess_token);

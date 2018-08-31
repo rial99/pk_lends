@@ -1,9 +1,11 @@
 package com.example.ratul.pocketlends;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,9 +25,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         Utils.pref_file = getSharedPreferences(getString(R.string.pocketlends_preferenceFileKey), Context.MODE_PRIVATE);
         Utils._domain = getString(R.string.domain_name);
+        //code here if no connection to server show an alert box and force close the app
+        statusAsyncTask statusTask = new statusAsyncTask();
+        statusTask.execute(Utils._domain+Utils._urlStatus,"GET",null,null);
+
         if (Utils.pref_file.getString("access_token","") != "" && Utils.pref_file.getString("refresh_token","") != "")
         {
             setContentView(R.layout.activity_main);
@@ -233,6 +238,35 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this,MainActivity.class);
             startActivity(i);
             finish();
+        }
+    }
+    private class statusAsyncTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... HTTPdata) {
+
+            if (HTTPdata.length < 1 || HTTPdata[0] == null) {
+                return null;
+            }
+            String result = Utils.fetchData(HTTPdata[0], HTTPdata[1], HTTPdata[2], HTTPdata[3]);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // If there is no result, do nothing.
+            if (result == null) {
+                AlertDialog.Builder altdial = new AlertDialog.Builder(MainActivity.this);
+                altdial.setMessage("Do you want to quit the app ???").setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        });
+                AlertDialog alert = altdial.create();
+                alert.setTitle("No connection to Server");
+                alert.show();
+            }
         }
     }
 

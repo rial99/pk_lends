@@ -42,7 +42,6 @@ public class Register extends AppCompatActivity {
                 {
                     showToast("please provide username and password");
                 }
-                else
                 {
                     String payload_json = Utils.toJson(username.getText().toString(),password.getText().toString());
                     RegisterAsyncTask task = new RegisterAsyncTask();
