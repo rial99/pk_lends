@@ -163,13 +163,14 @@ public class MainActivity extends AppCompatActivity {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int amount_int = Integer.parseInt(amount.getText().toString());
+                        int amount_int;
                         if (Utils.isEmpty(amount))
                         {
                             showToast("enter amount");
                         }
                         else
                         {
+                            amount_int = Integer.parseInt(amount.getText().toString());
                             JSONObject investJSON = new JSONObject();
                             try {
                                 investJSON.put("amt",amount_int);
@@ -301,10 +302,21 @@ public class MainActivity extends AppCompatActivity {
             if (result == null) {
                 return;
             }
-            showToast(result);
-            Intent i = new Intent(MainActivity.this,MainActivity.class);
-            startActivity(i);
-            finish();
+            JSONObject error = null;
+            try {
+                error = new JSONObject(result);
+                if (error.has("error"))
+                {
+                    showToast("user operation not allowed");
+                }
+                else{
+                    Intent i = new Intent(MainActivity.this,MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
     private class statusAsyncTask extends AsyncTask<String,Void,String> {

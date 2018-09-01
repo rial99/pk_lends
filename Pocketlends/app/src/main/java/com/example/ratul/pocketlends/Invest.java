@@ -55,26 +55,6 @@ public class Invest extends AppCompatActivity {
                 cancel.execute(request_url,"POST",cancelJson.toString(),Utils.pref_file.getString("access_token",""));
             }
         });
-//        Intent intent = getIntent();
-//        String option = intent.getStringExtra("option");
-//        switch(option)
-//        {
-//            case "invest":
-//                RequestUrl = Utils._domain+Utils._urlInvest;
-//                R_type.setText("Invest Request");
-//                break;
-//
-//            case "withdraw":
-//                RequestUrl = Utils._domain+Utils._urlWithdraw;
-//                R_type.setText("Withdraw Request");
-//                break;
-//
-//            case "borrow":
-//                RequestUrl = Utils._domain+Utils._urlBorrow;
-//                R_type.setText("Borrow Request");
-//                break;
-//        }
-
     }
     private void showToast(String data)
     {
