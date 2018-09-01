@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     String urlUser;
+    String RequestUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,26 +52,22 @@ public class MainActivity extends AppCompatActivity {
             InvestButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(MainActivity.this,Invest.class);
-                    i.putExtra("option","invest");
-                    startActivity(i);
+                    RequestUrl = Utils._domain+Utils._urlInvest;
+                   checkInvest();
                 }
             });
             WithdrawButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(MainActivity.this,Invest.class);
-                    i.putExtra("option","withdraw");
-                    startActivity(i);
-
+                    RequestUrl =Utils._domain+Utils._urlWithdraw;
+                    checkInvest();
                 }
             });
             BorrowButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(MainActivity.this,Invest.class);
-                    i.putExtra("option","borrow");
-                    startActivity(i);
+                    RequestUrl = Utils._domain+Utils._urlBorrow;
+                    checkInvest();
                 }
             });
             RepayButton.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+    private void checkInvest()
+    {
+        Utils.refreshTokens();
+        CheckInvestAsyncTask checkInvest = new CheckInvestAsyncTask();
+        checkInvest.execute(RequestUrl,"GET",null,Utils.pref_file.getString("access_token",""));
     }
 
     private void refreshData() {
@@ -132,6 +136,69 @@ public class MainActivity extends AppCompatActivity {
 
         TextView Borrow_interest = (TextView) findViewById(R.id.borrow_interest);
         Borrow_interest.setText(u.Interest_amt_B);
+    }
+
+    private class CheckInvestAsyncTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... HTTPdata) {
+
+            if (HTTPdata.length < 1 || HTTPdata[0] == null) {
+                return null;
+            }
+            String result = Utils.fetchData(HTTPdata[0], HTTPdata[1], HTTPdata[2], HTTPdata[3]);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // If there is no result, do nothing.
+            if (result == null) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.pop_up,null);
+                final EditText amount = (EditText) mView.findViewById(R.id.user_input_amount);
+                final Button btn = (Button) mView.findViewById(R.id.submit_btn);
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int amount_int = Integer.parseInt(amount.getText().toString());
+                        if (Utils.isEmpty(amount))
+                        {
+                            showToast("enter amount");
+                        }
+                        else
+                        {
+                            JSONObject investJSON = new JSONObject();
+                            try {
+                                investJSON.put("amt",amount_int);
+                                investJSON.put("options","add");
+
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            invest(investJSON.toString());
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+
+            }
+            else
+            {
+                Intent i = new Intent(MainActivity.this,Invest.class);
+                i.putExtra("request_url",RequestUrl);
+                startActivity(i);
+            }
+        }
+    }
+
+    private void invest(String payload) {
+        InvestAsyncTask invest = new InvestAsyncTask();
+        invest.execute(RequestUrl,"POST",payload,Utils.pref_file.getString("access_token",""));
     }
 
     public class RefreshAsyncTask extends AsyncTask<String,Void,String> {
@@ -267,6 +334,41 @@ public class MainActivity extends AppCompatActivity {
                 alert.setTitle("No connection to Server");
                 alert.show();
             }
+        }
+    }
+    public class InvestAsyncTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... HTTPdata) {
+
+            if (HTTPdata.length < 1 || HTTPdata[0] == null) {
+                return null;
+            }
+            String result = Utils.fetchData(HTTPdata[0], HTTPdata[1], HTTPdata[2], HTTPdata[3]);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // If there is no result, do nothing.
+            if (result == null) {
+                return;
+            }
+            try {
+                JSONObject error = new JSONObject(result);
+                if (error.has("error"))
+                {
+                    showToast("user operation not allowed");
+                }
+                else
+                {
+                    Intent i = new Intent(MainActivity.this,Invest.class);
+                    i.putExtra("request_url",RequestUrl);
+                    startActivity(i);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
