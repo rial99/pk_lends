@@ -37,7 +37,7 @@ public class Invest extends AppCompatActivity {
         Intent intent = getIntent();
         request_url = intent.getStringExtra("request_url");
 
-        RequestExist(request_url);
+        RequestExist();
 
         ButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +65,7 @@ public class Invest extends AppCompatActivity {
     }
 
 
-    public static void RequestExist(String result)
+    public static void RequestExist()
     {
         Invest.FetchAsyncTask fetch = new Invest().new FetchAsyncTask();
         fetch.execute(request_url,"GET",null,Utils.pref_file.getString("access_token",""));
@@ -87,7 +87,17 @@ public class Invest extends AppCompatActivity {
             if (result == null) {
                 return;
             }
-            showToast(result);
+            JSONObject message = null;
+            try {
+                message = new JSONObject(result);
+                if (message.has("message"))
+                {
+                    showToast(message.getString("message"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
     public class FetchAsyncTask extends AsyncTask<String,Void,String> {
