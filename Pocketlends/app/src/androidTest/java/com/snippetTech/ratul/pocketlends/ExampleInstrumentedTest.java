@@ -1,4 +1,4 @@
-package com.example.ratul.pocketlends;
+package com.snippetTech.ratul.pocketlends;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

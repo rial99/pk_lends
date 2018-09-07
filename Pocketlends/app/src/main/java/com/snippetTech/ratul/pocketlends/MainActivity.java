@@ -1,4 +1,4 @@
-package com.example.ratul.pocketlends;
+package com.snippetTech.ratul.pocketlends;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             Button WithdrawButton = (Button) findViewById(R.id.withdraw);
             Button BorrowButton = (Button) findViewById(R.id.borrow);
             Button RepayButton = (Button) findViewById(R.id.repay);
+            ImageButton RefreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
             InvestButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,15 +89,18 @@ public class MainActivity extends AppCompatActivity {
                     logoutTask.execute(urlLogout,"GET",null,Utils.pref_file.getString("access_token",""));
                 }
             });
-
+            RefreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    refreshData();
+                }
+            });
         }
         else
         {
             Intent i = new Intent(MainActivity.this,Register.class);
             startActivity(i);
         }
-
-
     }
     private void checkInvest()
     {

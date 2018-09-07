@@ -1,4 +1,4 @@
-package com.example.ratul.pocketlends;
+package com.snippetTech.ratul.pocketlends;
 
 public class User {
     public String Username;

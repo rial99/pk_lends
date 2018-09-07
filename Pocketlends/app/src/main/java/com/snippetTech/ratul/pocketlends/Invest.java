@@ -1,8 +1,10 @@
-package com.example.ratul.pocketlends;
+package com.snippetTech.ratul.pocketlends;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,19 +44,39 @@ public class Invest extends AppCompatActivity {
         ButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONObject cancelJson = new JSONObject();
-                try {
-                    cancelJson.put("amt",0);
-                    cancelJson.put("options","cancel");
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                Invest.InvestAsyncTask cancel = new Invest().new InvestAsyncTask();
-                cancel.execute(request_url,"POST",cancelJson.toString(),Utils.pref_file.getString("access_token",""));
+                AlertDialog.Builder altdial = new AlertDialog.Builder(Invest.this);
+                altdial.setMessage("Do you want to cancel the request ???").setCancelable(false)
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                cancelRequest();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alert = altdial.create();
+                alert.setTitle("Cancel");
+                alert.show();
             }
         });
+    }
+    public static void cancelRequest()
+    {
+        JSONObject cancelJson = new JSONObject();
+        try {
+            cancelJson.put("amt",0);
+            cancelJson.put("options","cancel");
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Invest.CancelInvestAsync cancel = new Invest().new CancelInvestAsync();
+        cancel.execute(request_url,"POST",cancelJson.toString(),Utils.pref_file.getString("access_token",""));
     }
     private void showToast(String data)
     {
@@ -100,6 +122,28 @@ public class Invest extends AppCompatActivity {
 
         }
     }
+    public class CancelInvestAsync extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... HTTPdata) {
+
+            if (HTTPdata.length < 1 || HTTPdata[0] == null) {
+                return null;
+            }
+            String result = Utils.fetchData(HTTPdata[0], HTTPdata[1], HTTPdata[2], HTTPdata[3]);
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // If there is no result, do nothing.
+            if (result == null) {
+                return;
+            }
+            Intent i = new Intent(Invest.this,MainActivity.class);
+            startActivity(i);
+        }
+    }
+    // show order details to the user
     public class FetchAsyncTask extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... HTTPdata) {
